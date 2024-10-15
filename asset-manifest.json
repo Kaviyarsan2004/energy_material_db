@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/energy_material_db/static/css/main.ae9aa395.css",
+    "main.js": "/energy_material_db/static/js/main.6f39410b.js",
+    "static/js/453.ad6eb26e.chunk.js": "/energy_material_db/static/js/453.ad6eb26e.chunk.js",
+    "index.html": "/energy_material_db/index.html",
+    "main.ae9aa395.css.map": "/energy_material_db/static/css/main.ae9aa395.css.map",
+    "main.6f39410b.js.map": "/energy_material_db/static/js/main.6f39410b.js.map",
+    "453.ad6eb26e.chunk.js.map": "/energy_material_db/static/js/453.ad6eb26e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ae9aa395.css",
+    "static/js/main.6f39410b.js"
+  ]
+}
