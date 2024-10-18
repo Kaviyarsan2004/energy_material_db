@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const fetchFarmHavers = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/farm-havers");
+        const response = await axios.get("http://127.0.0.1:8000/get-dopant");
         setFarmHavers(response.data);
       } catch (error) {
         console.error("Error fetching FARM havers:", error);
@@ -35,7 +35,7 @@ function App() {
     });
 
     try {
-      await axios.post("http://127.0.0.1:8050/select-dopant", {
+      await axios.post("http://127.0.0.1:8000/get-dopant", {
           element: selectedHaverData.element,
           formationEnergy: selectedHaverData.formation_energy,
           charge_transition: selectedHaverData.charge_transition,
