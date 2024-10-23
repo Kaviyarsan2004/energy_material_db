@@ -14,7 +14,7 @@ function App() {
         const response = await axios.get("https://energy-material-backend.onrender.com/get-dopant");
         setFarmHavers(response.data);
       } catch (error) {
-        console.error("Error fetching FARM havers:", error);
+        console.error("Error fetching FARM havers:", error.response ? error.response.data : error);
       }
     };
 
