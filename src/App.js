@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const fetchFarmHavers = async () => {
       try {
-        const response = await axios.get("https://energy-material-backend.onrender.com/get-dopant");
+        const response = await axios.get("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/get-dopant");
         setFarmHavers(response.data);
       } catch (error) {
         console.error("Error fetching FARM havers:", error.response ? error.response.data : error);
@@ -35,7 +35,7 @@ function App() {
     });
 
     try {
-      await axios.post("https://energy-material-backend.onrender.com/get-dopant", {
+      await axios.post("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/get-dopant", {
           element: selectedHaverData.element,
           formationEnergy: selectedHaverData.formation_energy,
           charge_transition: selectedHaverData.charge_transition,
