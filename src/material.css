@@ -1,0 +1,132 @@
+/* CSS for Navigation Bar */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .nav-items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .nav-item {
+    padding: 14px 20px;
+  }
+  
+  .nav-item a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .nav-item a:hover {
+    background-color: #575757;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  /* Adjust layout to avoid navbar overlap */
+  .app {
+    display: flex;
+    flex-direction: row;
+    padding-top: 60px; /* Make space for the navbar */
+  }
+  
+  .sidebar {
+    width: 20%;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .main-viewer {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .details-pane {
+    width: 20%;
+    padding: 20px;
+    border-left: 1px solid #ddd;
+  }
+  
+  .description {
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .export-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .export-btn:hover {
+    background-color: #45a049;
+  }
+
+
+
+  .farm-havers-container {
+    width: 100%; /* Make the container full width */
+    max-width: 400px; /* Limit the max width for readability */
+    margin: 20px auto; /* Center the container */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 0;
+  }
+  
+  .select-container {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  select {
+    padding: 8px;
+    font-size: 16px;
+    width: 100%; /* Ensure the dropdown spans full width */
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%; /* Full width button */
+    margin-top: 15px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  
