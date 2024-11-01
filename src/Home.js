@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import DetailsPane from './DetailsPane'; 
+import './ABX3-DFT.css'; 
 
 
 function MainViewer() {
@@ -9,7 +12,7 @@ function MainViewer() {
   );
 }
 
-function DFT() {
+function ABX3DFT() {
   const [farmHavers, setFarmHavers] = useState([]);
   const [selectedHaver, setSelectedHaver] = useState("");
   const [formationEnergy, setFormationEnergy] = useState(null);
@@ -86,4 +89,4 @@ function DFT() {
   );
 }
 
-export default DFT;
+export default ABX3DFT;

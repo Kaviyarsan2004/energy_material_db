@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+
+/* General Reset for Unordered Lists */
+ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+
+/* Navigation Bar Styling */
+nav {
+  background-color: #4a90e2; /* Background color */
+  padding: 10px 20px; /* Padding around the nav */
+}
+
+/* Navigation Links */
+nav ul li {
+  display: inline; /* Display list items in a row */
+  margin-right: 20px; /* Space between links */
+}
+
+nav ul li:last-child {
+  margin-right: 0; /* Remove right margin for the last item */
+}
+
+/* Styling Links */
+nav a {
+  text-decoration: none; /* Remove underline from links */
+  color: white; /* Link text color */
+  font-weight: bold; /* Bold text */
+  transition: color 0.3s; /* Transition effect for hover */
+}
+
+/* Hover Effect */
+nav a:hover {
+  color: #ffcc00; /* Change color on hover */
+}

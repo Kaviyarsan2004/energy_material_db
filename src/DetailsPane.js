@@ -1,5 +1,5 @@
 import React from "react";
-import './material.css'; 
+import './App.css'; 
 
 const DetailsPane = ({ formationEnergy, chargeTransition }) => {
   return (

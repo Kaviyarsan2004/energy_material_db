@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from 'react';
+import axios from "axios";
+import DetailsPane from './DetailsPane'; 
+import './ABX3-DFT.css'; 
 
 
 function MainViewer() {
@@ -9,17 +12,21 @@ function MainViewer() {
   );
 }
 
-function DFT() {
+function ABX3DFT() {
   const [farmHavers, setFarmHavers] = useState([]);
   const [selectedHaver, setSelectedHaver] = useState("");
   const [formationEnergy, setFormationEnergy] = useState(null);
   const [chargeTransition, setChargeTransition] = useState(null);
+  const [iframeKey, setIframeKey] = useState(0);
+  // const iframeRef = useRef(null);
 
   useEffect(() => {
     const fetchFarmHavers = async () => {
       try {
         const response = await axios.get("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/get-dopant");
         setFarmHavers(response.data);
+        console.log(response.data)
+
       } catch (error) {
         console.error("Error fetching FARM havers get:", error);
       }
@@ -35,13 +42,16 @@ function DFT() {
     setChargeTransition(selectedHaverData.charge_transition); // Set the retrieved charge transition
 
     try {
-      await axios.post("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/get-dopant", {
-        element: selectedHaverData.element,
-        formationEnergy: selectedHaverData.formation_energy,
-        charge_transition: selectedHaverData.charge_transition,
+
+      await axios.post("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/dash/select-dopant", {
+        element: selectedHaverData.element
       });
+
+      // Update iframe key to force reload
+      setIframeKey(prevKey => prevKey + 1);
+
     } catch (error) {
-      console.error("Error selecting FARM haver post:", error);
+      console.error("Error selecting FARM haver:", error);
     }
   };
 
@@ -76,7 +86,15 @@ function DFT() {
           </div>
           <button onClick={handleSelection}>Select</button>
         </div>
-        <MainViewer />
+        {/* <MainViewer /> */}
+        <iframe
+          key={iframeKey}  // Use iframeKey to reload iframe on change
+          src="https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/dash/"
+          width="100%"
+          height="600px"
+          title="Dash Crystal Viewer"
+          style={{ border: 'none' }}
+        ></iframe>
         <DetailsPane 
           formationEnergy={formationEnergy} 
           chargeTransition={chargeTransition} 
@@ -86,4 +104,4 @@ function DFT() {
   );
 }
 
-export default DFT;
+export default ABX3DFT;

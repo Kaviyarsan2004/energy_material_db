@@ -1,102 +1,81 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import './styles.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import './App.css'; 
+import DetailsPane from './DetailsPane'; 
+import ABX3_ML from './ABX3-ML';
+import Home from "./Home";
+import About from "./About";
+import ABX3DFT from "./ABX3-DFT";
+import A2B1B2X6 from "./A2B1B2X6";
 
-function App() {
-  const [farmHavers, setFarmHavers] = useState([]);
-  const [selectedHaver, setSelectedHaver] = useState("");
-  const [formationEnergy, setFormationEnergy] = useState(null); 
-  const [chargeTransition, setChargeTransition] = useState(null); 
 
-  useEffect(() => {
-    const fetchFarmHavers = async () => {
-      try {
-        const response = await axios.get("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/get-dopant");
-        setFarmHavers(response.data);
-      } catch (error) {
-        console.error("Error fetching FARM havers get:", error);
-      }
-    };
+// function Sidebar() {
+//   return (
+//     <div className="sidebar">
+//       <ul>
+//         <li>Summary</li>
+//         <li>Crystal Structure</li>
+//         <li>Properties</li>
+//         <li>Contributed Data</li>
+//         <li>Literature References</li>
+//         <li>External Links</li>
+//       </ul>
+//     </div>
+//   );
+// }
 
-    fetchFarmHavers();
-  }, []);
 
-  const handleSelection = async () => {
-      const selectedHaverData = farmHavers.find(haver => haver.element === selectedHaver);
 
-      setFormationEnergy(selectedHaverData.formation_energy); // Set the retrieved formation energy
-      setChargeTransition(selectedHaverData.charge_transition); // Set the retrieved charge transition
-      console.log(selectedHaverData.element)
-      
-      console.log("Sending data to Dash:", {
-        element: selectedHaverData.element,
-        formationEnergy: selectedHaverData.formation_energy,
-        charge_transition: selectedHaverData.charge_transition,
-    });
 
-    try {
-      await axios.post("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/get-dopant", {
-          element: selectedHaverData.element,
-          formationEnergy: selectedHaverData.formation_energy,
-          charge_transition: selectedHaverData.charge_transition,
-      });
-  } catch (error) {
-      console.error("Error selecting FARM haver post:", error);
-  }
-    
-  };
+// function Description() {
+//   return (
+//     <div className="description">
+//       <p>CsSnI₃ is a cubic perovskite...</p>
+//     </div>
+//   );
+// }
 
+
+const App = () => {
   return (
-    <div className="App">
-      <h1>Defected Formation Energy</h1>
-      <div className="select-container">
-        <label htmlFor="host-material">Host Material</label>
-        <select>
-          <option value="" disabled>Select</option>
-          <option value="CsSnI3">CsSnI3</option>
-        </select>
-      </div>
-
-      <div className="select-container">
-        <label htmlFor="host-material">Select Dopant</label>
-        <select
-          value={selectedHaver}
-          onChange={(e) => setSelectedHaver(e.target.value)}
-        >
-          <option value="" disabled>Select</option>
-          {farmHavers.map((haver) => (
-            <option key={haver.element} value={haver.element}>
-              {haver.element}
-            </option>
-          ))}
-        </select>
-      </div>
-      <button onClick={handleSelection}>Select</button>
-
-      {/* Display Formation Energy */}
-      {formationEnergy !== null && (
-        <div>
-          <h2>Formation Energy: {formationEnergy} eV</h2>
-        </div>
-      )}
-
-      {chargeTransition !== null && (
-        <div>
-          <h2>Charge Transition: {chargeTransition} (+/0) (eV)</h2>
-        </div>
-      )}
-      
-      <h1>Crystal Structure Viewer</h1>
+    <Router>
       <div>
-        <iframe
-          src={`http://localhost:8050`}
-          width="100%"
-          height="600px"
-          title="Dash Crystal Viewer"
-          style={{ border: 'none' }}
-        ></iframe>
+        {/* Navigation Bar */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/materials">Materials</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/abx3-dft">ABX3-DFT</Link>
+            </li>
+            <li>
+              <Link to="/ABX3-ML">ABX3-ML</Link>
+            </li>
+            <li>
+              <Link to="/A2B1B2X6">A2B1B2X6</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Routes */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/materials" element={<Materials/>} /> */}
+          <Route path="/about" element={<About/>} />
+          <Route path="/abx3-dft" element={<ABX3DFT/>} /> 
+          <Route path="/ABX3-ML" element={<ABX3_ML/>} />
+          <Route path="/A2B1B2X6" element={<A2B1B2X6/>} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
