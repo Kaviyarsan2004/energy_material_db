@@ -95,10 +95,18 @@ function ABX3DFT() {
           title="Dash Crystal Viewer"
           style={{ border: 'none' }}
         ></iframe>
-        <DetailsPane 
+        {/* <DetailsPane 
           formationEnergy={formationEnergy} 
           chargeTransition={chargeTransition} 
+        /> */}
+
+        <DetailsPane 
+          dataFields={[
+            { label: "Formation Energy", value: formationEnergy },
+            { label: "chargeTransition", value: chargeTransition }
+          ]}
         />
+
       </div>
     </div>
   );

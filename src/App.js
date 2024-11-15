@@ -45,7 +45,7 @@ const App = () => {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/Home">Home</Link>
             </li>
             <li>
               <Link to="/materials">Materials</Link>
@@ -54,7 +54,7 @@ const App = () => {
               <Link to="/about">About</Link>
             </li>
             <li>
-              <Link to="/abx3-dft">ABX3-DFT</Link>
+              <Link to="energy_material_db/">ABX3-DFT</Link>
             </li>
             <li>
               <Link to="/ABX3-ML">ABX3-ML</Link>
@@ -67,10 +67,10 @@ const App = () => {
 
         {/* Routes */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           {/* <Route path="/materials" element={<Materials/>} /> */}
           <Route path="/about" element={<About/>} />
-          <Route path="/abx3-dft" element={<ABX3DFT/>} /> 
+          <Route path="energy_material_db/" element={<ABX3DFT/>} /> 
           <Route path="/ABX3-ML" element={<ABX3_ML/>} />
           <Route path="/A2B1B2X6" element={<A2B1B2X6/>} />
         </Routes>

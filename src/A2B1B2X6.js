@@ -1,71 +1,99 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import DetailsPane from "./DetailsPane";
+import './A2B1B2X6.css';
 
 const A2B1B2X6 = () => {
-  // State for form inputs and API response
-  const [inputA, setInputA] = useState("");
-  const [inputB, setInputB] = useState("");
-  const [apiData, setApiData] = useState(null);
-  const [error, setError] = useState(null);
+  const [farmHavers, setFarmHavers] = useState([]);
+  const [selectedHaver, setSelectedHaver] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
+  const [bandGap, setFormationEnergy] = useState(null);
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const plotImageURL = `${process.env.PUBLIC_URL}/ca_sc.png`;
 
-    try {
-      // Example API call
-    //   const response = await fetch(`https://your-api.com/data?A=${inputA}&B=${inputB}`);
-      const response = await fetch(`http://127.0.0.1:8000/get-bandgap`);
-      if (!response.ok) {
-        throw new Error("API request failed");
+  useEffect(() => {
+    const fetchDopants = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/get-bandgap");
+        setFarmHavers(response.data || []); // Default to empty array if response.data is undefined
+      } catch (error) {
+        console.error("Error fetching FARM havers:", error);
+        setFarmHavers([]); // Set an empty array on error
       }
-      const data = await response.json();
-      console.log(data)
-      setApiData(data);
-      setError(null);  // Clear any previous error
-    } catch (err) {
-      setError("Failed to fetch data");
-      setApiData(null);
+    };
+    fetchDopants();
+  }, []);
+
+  const handleSelection = () => {
+    const selectedHaverData = farmHavers.find((haver) => haver.Element === selectedHaver);
+    if (selectedHaverData) {
+      if (selectedModel === "RFR") {
+        setFormationEnergy(selectedHaverData.RFR);
+      } else if (selectedModel === "NN") {
+        setFormationEnergy(selectedHaverData.NN);
+      } else if (selectedModel === "GPR") {
+        setFormationEnergy(selectedHaverData.GPR);
+      }
     }
   };
 
   return (
-    <div>
-      <h1>Bandgap Data</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="inputA">Input A:</label>
-          <input
-            type="text"
-            id="inputA"
-            value={inputA}
-            onChange={(e) => setInputA(e.target.value)}
-            placeholder="Enter value for A"
-          />
+    <div className="app">
+      <div className="farm-havers-container">
+        <h1>Bandgap</h1>
+
+        {/* Host Material Selection */}
+        <div className="select-container">
+          <label htmlFor="host-material">Material</label>
+          <select
+              id="dopant-select"
+              value={selectedHaver}
+              onChange={(e) => setSelectedHaver(e.target.value)}
+            >
+              <option value="" disabled>Select</option>
+              {farmHavers?.map((haver) => (
+                <option key={haver._id} value={haver.Element}>
+                  {haver.Element}
+                </option>
+              ))}
+            </select>
         </div>
 
-        <div>
-          <label htmlFor="inputB">Input B:</label>
-          <input
-            type="text"
-            id="inputB"
-            value={inputB}
-            onChange={(e) => setInputB(e.target.value)}
-            placeholder="Enter value for B"
-          />
+        {/* Model Selection */}
+        <div className="select-container">
+          <label htmlFor="model-select">Select Model</label>
+          <select
+            id="model-select"
+            value={selectedModel}
+            onChange={(e) => setSelectedModel(e.target.value)}
+          >
+            <option value="" disabled>Select</option>
+            <option value="RFR">RFR</option>
+            <option value="NN">NN</option>
+            <option value="GPR">GPR</option>
+          </select>
         </div>
 
-        <button type="submit">Fetch Data</button>
-      </form>
+        <button onClick={handleSelection}>Select</button>
+      </div>
 
-      {/* Display the API Data */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {apiData && (
-        <div>
-          <h2>API Response:</h2>
-          <pre>{JSON.stringify(apiData, null, 2)}</pre>
-        </div>
-      )}
+      <div className="plot-image-container">
+        <img 
+          src={plotImageURL} 
+          alt="Plot Screenshot" 
+          width="100%" 
+          height="600px" 
+          style={{ border: "none" }} 
+        />
+      </div>
+      <DetailsPane 
+          dataFields={[
+            { label: "Band Gap", value: bandGap }
+          ]}
+        />
+
+      {/* <DetailsPane bandGap={formationEnergy} /> */}
+      
     </div>
   );
 };

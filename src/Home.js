@@ -80,10 +80,10 @@ function ABX3DFT() {
           <button onClick={handleSelection}>Select</button>
         </div>
         <MainViewer />
-        <DetailsPane 
+        {/* <DetailsPane 
           formationEnergy={formationEnergy} 
           chargeTransition={chargeTransition} 
-        />
+        /> */}
       </div>
     </div>
   );
