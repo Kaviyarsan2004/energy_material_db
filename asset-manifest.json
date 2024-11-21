@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/energy_material_db/static/css/main.c72867c7.css",
-    "main.js": "/energy_material_db/static/js/main.2037bf81.js",
+    "main.js": "/energy_material_db/static/js/main.73da353d.js",
     "static/js/453.ad6eb26e.chunk.js": "/energy_material_db/static/js/453.ad6eb26e.chunk.js",
     "index.html": "/energy_material_db/index.html",
     "main.c72867c7.css.map": "/energy_material_db/static/css/main.c72867c7.css.map",
-    "main.2037bf81.js.map": "/energy_material_db/static/js/main.2037bf81.js.map",
+    "main.73da353d.js.map": "/energy_material_db/static/js/main.73da353d.js.map",
     "453.ad6eb26e.chunk.js.map": "/energy_material_db/static/js/453.ad6eb26e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c72867c7.css",
-    "static/js/main.2037bf81.js"
+    "static/js/main.73da353d.js"
   ]
 }
