@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect, useRef } from 'react';
+import axios from "axios";
+import DetailsPane from './DetailsPane'; 
 
 function MainViewer() {
   return (

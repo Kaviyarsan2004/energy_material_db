@@ -69,7 +69,7 @@ const App = () => {
         <Routes>
           <Route path="/Home" element={<Home />} />
           {/* <Route path="/materials" element={<Materials/>} /> */}
-          <Route path="/about" element={<About/>} />
+          {/* <Route path="/about" element={<About/>} /> */}
           <Route path="energy_material_db/" element={<ABX3DFT/>} /> 
           <Route path="/ABX3-ML" element={<ABX3_ML/>} />
           <Route path="/A2B1B2X6" element={<A2B1B2X6/>} />

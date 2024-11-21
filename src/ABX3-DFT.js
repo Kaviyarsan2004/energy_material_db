@@ -23,7 +23,7 @@ function ABX3DFT() {
   useEffect(() => {
     const fetchFarmHavers = async () => {
       try {
-        const response = await axios.get("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/get-dopant");
+        const response = await axios.get("https://broken-lesya-ecd517-23c05196.koyeb.app/get-dopant");
         setFarmHavers(response.data);
         console.log(response.data)
 
@@ -43,7 +43,7 @@ function ABX3DFT() {
 
     try {
 
-      await axios.post("https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/dash/select-dopant", {
+      await axios.post("https://broken-lesya-ecd517-23c05196.koyeb.app/select-dopant", {
         element: selectedHaverData.element
       });
 
@@ -89,7 +89,7 @@ function ABX3DFT() {
         {/* <MainViewer /> */}
         <iframe
           key={iframeKey}  // Use iframeKey to reload iframe on change
-          src="https://unable-shaylyn-ecd517-b88b5a87.koyeb.app/dash/"
+          src="https://broken-lesya-ecd517-23c05196.koyeb.app/dash/"
           width="100%"
           height="600px"
           title="Dash Crystal Viewer"
