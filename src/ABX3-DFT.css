@@ -101,13 +101,15 @@ h1 {
   display: flex;
   justify-content: center; /* Center the iframe horizontally */
   align-items: center; /* Center the iframe vertically */
-  width: 100%;
+  width: 90%;
 }
 
 iframe {
-  width: 50%; /* Adjust the width as needed */
-  height: 600px; /* Maintain height */
-  border: none; /* Remove border */
+  width: 50%; 
+  height: 600px; 
+  border: none; 
+  max-width: '100px';
   border-radius: 10px;
+  margin: '0 auto',
 
 }

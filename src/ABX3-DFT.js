@@ -1,115 +1,122 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import DetailsPane from './DetailsPane'; 
 import './ABX3-DFT.css'; 
 
-
-function MainViewer() {
-  return (
-    <div className="main-viewer">
-      <img src="crystal_placeholder.png" alt="Crystal Structure" />
-    </div>
-  );
-}
-
 function ABX3DFT() {
-  const [farmHavers, setFarmHavers] = useState([]);
-  const [selectedHaver, setSelectedHaver] = useState("");
-  const [formationEnergy, setFormationEnergy] = useState(null);
   const [chargeTransition, setChargeTransition] = useState(null);
   const [iframeKey, setIframeKey] = useState(0);
-  // const iframeRef = useRef(null);
+  const [selectedHost, setSelectedHost] = useState("CsSnI3");
+  const [dropdownData, setDropdownData] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedValue, setSelectedValue] = useState('0'); // New state for the second dropdown
+  const [formationEnergy, setFormationEnergy] = useState(null);
 
   useEffect(() => {
-    const fetchFarmHavers = async () => {
-      try {
-        const response = await axios.get("https://broken-lesya-ecd517-23c05196.koyeb.app/get-dopant");
-        setFarmHavers(response.data);
-        console.log(response.data)
+      // Replace this URL with your actual API endpoint
+      axios.get('https://decent-valida-ecd517-adb7246d.koyeb.app/get-dopant')
+        .then(response => {
+          // Assuming the response is an array like [{ Dopants: "Nb_Cs" }, ...]
+          setDropdownData(response.data);
+          
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
 
-      } catch (error) {
-        console.error("Error fetching FARM havers get:", error);
-      }
+    const handleDopantChange = (event) => {
+      setSelectedOption(event.target.value);
     };
 
-    fetchFarmHavers();
-  }, []);
+    const handleValueChange = (event) => {
+      setSelectedValue(event.target.value);
+    };
 
-  const handleSelection = async () => {
-    const selectedHaverData = farmHavers.find(haver => haver.element === selectedHaver);
+    const handleSubmit = async () => {
+      console.log('Selected Dopant:', selectedOption);
+      console.log('Selected Value:', selectedValue);
 
-    setFormationEnergy(selectedHaverData.formation_energy); // Set the retrieved formation energy
-    setChargeTransition(selectedHaverData.charge_transition); // Set the retrieved charge transition
+      // Call the /get_formation_energy API
+      try {
+        const response = await axios.get('https://decent-valida-ecd517-adb7246d.koyeb.app/get_formation_energy', {
+          params: {
+            dopant: selectedOption,
+            charge_state: selectedValue,
+          },
+        });
 
-    try {
-
-      await axios.post("https://broken-lesya-ecd517-23c05196.koyeb.app/select-dopant", {
-        element: selectedHaverData.element
-      });
-
-      // Update iframe key to force reload
-      setIframeKey(prevKey => prevKey + 1);
-
-    } catch (error) {
-      console.error("Error selecting FARM haver:", error);
-    }
-  };
-
-  return (
-    <div>
-      
+        setFormationEnergy(response.data);
+        setIframeKey(prevKey => prevKey + 100);
+      } catch (error) {
+        console.error('Error fetching formation energy:', error);
+        setFormationEnergy({ error: 'Error fetching formation energy.' });
+        setIframeKey(prevKey => prevKey + 50);
+      }
+    };
+ 
+  
+    return (
       <div className="app">
-        {/* <Sidebar /> */}
         <div className="farm-havers-container">
           <h1>Defected Formation Energy</h1>
+    
           <div className="select-container">
-            <label htmlFor="host-material">Host Material</label>
-            <select>
-              <option value="" disabled>Select</option>
+            <label>Host Material</label>
+            <select value={selectedHost} onChange={(e) => setSelectedHost(e.target.value)}>
               <option value="CsSnI3">CsSnI3</option>
             </select>
           </div>
-
+    
           <div className="select-container">
-            <label htmlFor="host-material">Select Dopant</label>
-            <select
-              value={selectedHaver}
-              onChange={(e) => setSelectedHaver(e.target.value)}
-            >
+            <label>Select Dopant</label>
+            <select id="dropdown" value={selectedOption} onChange={handleDopantChange} required>
               <option value="" disabled>Select</option>
-              {farmHavers.map((haver) => (
-                <option key={haver.element} value={haver.element}>
-                  {haver.element}
+              {dropdownData.map((item, index) => (
+                <option key={index} value={item.Dopants}>
+                  {item.Dopants}
                 </option>
               ))}
             </select>
           </div>
-          <button onClick={handleSelection}>Select</button>
+    
+          <div className="select-container">
+            <label>Select Charge State</label>
+            <select
+              id="valueDropdown"
+              value={selectedValue}
+              onChange={handleValueChange}
+            >
+              <option value="0">0</option>
+              <option value="1">1</option>
+            </select>
+          </div>
+    
+          <button onClick={handleSubmit}>Select</button>
         </div>
-        {/* <MainViewer /> */}
+    
+        {/* Adjust the height of the iframe to reduce its space */}
         <iframe
-          key={iframeKey}  // Use iframeKey to reload iframe on change
-          src="https://broken-lesya-ecd517-23c05196.koyeb.app/dash/"
-          width="100%"
-          height="600px"
+          key={iframeKey}
+          src="https://decent-valida-ecd517-adb7246d.koyeb.app/dash/"
+          
           title="Dash Crystal Viewer"
-          style={{ border: 'none' }}
+        
         ></iframe>
-        {/* <DetailsPane 
-          formationEnergy={formationEnergy} 
-          chargeTransition={chargeTransition} 
-        /> */}
 
-        <DetailsPane 
-          dataFields={[
-            { label: "Formation Energy", value: formationEnergy },
-            { label: "chargeTransition", value: chargeTransition }
-          ]}
-        />
-
+    
+        <div>
+          <h1>Formation Energy</h1>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {Object.entries(formationEnergy ?? {}).map(([key, value]) => (
+              <div key={key} style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '5px' }}>
+                <strong>{key}</strong>: {value}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
 }
 
 export default ABX3DFT;
